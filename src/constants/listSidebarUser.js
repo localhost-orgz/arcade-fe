@@ -2,22 +2,22 @@ const LIST_NAVIGATION_USER = [
   {
     path: "/subjects",
     icon: "/bumi.svg",
-    label: "Subjects",
+    label: "Mata Pelajaran",
   },
   {
     path: "/leaderboard",
     icon: "/stairs.png",
-    label: "Leaderboard",
+    label: "Papan Skor",
   },
   {
     path: "/books",
     icon: "/book_user.png",
-    label: "Books",
+    label: "Buku",
   },
   {
     path: "/profile",
     icon: "/user.png",
-    label: "Profile",
+    label: "Profil",
   },
 ];
 

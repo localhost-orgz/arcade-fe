@@ -60,3 +60,10 @@ export const getResults = async () => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const getResultDetail = async (uuid) => {
+  const token = localStorage.getItem("token");
+  return apiRequest(`/quiz-results/${uuid}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

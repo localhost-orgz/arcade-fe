@@ -27,6 +27,9 @@ export default function Subjects() {
 
       <div className="h-full max-w-[912px] px-3 mx-auto">
         <h1 className="text-2xl font-bold text-neutral-700">Mata Pelajaran</h1>
+        <p className="text-sm text-neutral-600 mb-4">
+          Pilih mata pelajaran yang ingin kamu pelajari dan jelajahi materi yang tersedia.
+        </p>
         <List />
       </div>
     </AuthGuard>

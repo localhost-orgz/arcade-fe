@@ -1,22 +1,33 @@
 import { getResults } from "@/services/quizService";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const UserQuizResult = () => {
   const [quizResults, setQuizResults] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchResults = async () => {
     try {
       const data = await getResults();
       setQuizResults(data.data);
-      console.log(data);
     } catch (error) {
       console.error("Failed to fetch quiz results:", error);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchResults();  
+    fetchResults();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex w-full justify-center items-center py-10">
+        <span className="text-base text-gray-600">Memuat hasil quiz...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-8">
@@ -37,9 +48,12 @@ const UserQuizResult = () => {
               />
               <div className="flex-1">
                 <div className="flex flex-col md:flex-row md:items-center md:gap-2">
-                  <span className="font-semibold text-blue-800">
+                  <Link
+                    href={`/result/${result.uuid}`}
+                    className="font-semibold text-blue-800 hover:underline"
+                  >
                     {result.topic.title}
-                  </span>
+                  </Link>
                   <span className="text-xs text-gray-400 ml-0 md:ml-2">
                     {result.topic.subject.name}
                   </span>

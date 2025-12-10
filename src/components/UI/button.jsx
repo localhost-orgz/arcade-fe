@@ -29,6 +29,8 @@ const buttonVariants = cva(
           "absolute bg-sky-400 shadow-[0_10px_0_#0084d1] active:shadow-[0_2px_0_#0084d1] active:translate-y-1 transition-all duration-100 flex items-center justify-center transform-[perspective(500px)_rotateX(30deg)] origin-bottom",
         lessonLocked:
           "absolute bg-[#e5e5e5] shadow-[0_10px_0_#b7b7b7] active:shadow-[0_2px_0_#b7b7b7] active:translate-y-1 transition-all duration-100 flex items-center justify-center transform-[perspective(500px)_rotateX(30deg)] origin-bottom",
+        lessonDone:
+          "absolute bg-green-500 shadow-[0_10px_0_#22c55e] active:shadow-[0_2px_0_#22c55e] active:translate-y-1 transition-all duration-100 flex items-center justify-center transform-[perspective(500px)_rotateX(30deg)] origin-bottom",
         uploadButton:
           "absolute right-0 bottom-0 border-2 rounded-full bg-white cursor-pointer",
         adminAddNew:

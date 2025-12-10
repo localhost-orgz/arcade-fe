@@ -32,7 +32,7 @@ const QuizQuestion = ({ quiz, selected, handleAnswer }) => {
       <AnimatePresence>
         {isAnswered && (
           <QuizExplanation
-            text={quiz.explanation || "Penjelasan belum tersedia."}
+            text={quiz.explain || "Penjelasan belum tersedia."}
           />
         )}
       </AnimatePresence>

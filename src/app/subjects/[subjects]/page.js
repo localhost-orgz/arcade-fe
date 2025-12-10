@@ -13,6 +13,7 @@ import { MoveLeft } from "lucide-react";
 import DetailSubjectsSkeleton from "@/components/DetailSubject/Skeleton";
 import AuthGuard from "@/utils/authGuard";
 import Image from "next/image";
+import { getResults } from "@/services/quizService";
 
 function DetailSubjectContent() {
   const router = useRouter();
@@ -21,6 +22,23 @@ function DetailSubjectContent() {
   const [subjectDetail, setSubjectDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [fact, setFact] = useState(null);
+  const [quizResults, setQuizResults] = useState([]);
+
+  // === Fetch Data ===
+  // 1. Fetch Quiz Results
+  const fetchQuizResults = async () => {
+    try {
+      const results = await getResults();
+      if (results && results.status === "success" && Array.isArray(results.data)) {
+        setQuizResults(results.data);
+      } else {
+        setQuizResults([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch quiz results:", error);
+      setQuizResults([]);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +85,7 @@ function DetailSubjectContent() {
     };
 
     fetchData();
+    fetchQuizResults();
   }, [subjectSlug, router]);
 
   if (loading) return <DetailSubjectsSkeleton />;
@@ -130,19 +149,44 @@ function DetailSubjectContent() {
                     subIndex={1}
                   />
                 </Link>
-                {Array.isArray(topic.quizzes) && topic.quizzes.length > 0 ? (
-                  <Link
-                    href={`/subjects/${subjectSlug}/${topic.slug}/quiz`}
-                    key={index + 3}
-                  >
-                    <LessonButton
-                      buttonType="quiz"
-                      locked={false}
-                      index={index}
-                      subIndex={2}
-                    />
-                  </Link>
-                ) : (
+                {Array.isArray(topic.quizzes) && topic.quizzes.length > 0 ? (() => {
+                  // Cari apakah hasil quiz untuk topic ini sudah ada
+                  const userResult = quizResults &&
+                    Array.isArray(quizResults) &&
+                    quizResults.find(qr => qr.topic_id === topic.id);
+
+                  // Jika sudah pernah mengerjakan, arahkan ke /result/:quizResultUuid
+                  if (userResult && userResult.uuid) {
+                    return (
+                      <Link
+                        href={`/result/${userResult.uuid}`}
+                        key={index + 3}
+                      >
+                        <LessonButton
+                          buttonType="check"
+                          locked={true}
+                          index={index}
+                          subIndex={2}
+                        />
+                      </Link>
+                    );
+                  }
+
+                  // Jika belum pernah, arahkan ke halaman quiz
+                  return (
+                    <Link
+                      href={`/subjects/${subjectSlug}/${topic.slug}/quiz`}
+                      key={index + 3}
+                    >
+                      <LessonButton
+                        buttonType="quiz"
+                        locked={false}
+                        index={index}
+                        subIndex={2}
+                      />
+                    </Link>
+                  );
+                })() : (
                   <LessonButton
                     buttonType="quiz"
                     locked={true}

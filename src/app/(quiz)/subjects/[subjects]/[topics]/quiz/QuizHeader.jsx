@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import { X, CircleQuestionMark } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useParams, useRouter } from "next/navigation";
 
 import Link from "next/link";
 
 const QuizHeader = () => {
   const [isShowing, setIsShowing] = useState(false);
 
+  // Ambil slug subject & topic dari params
+  const params = useParams();
+  const router = useRouter();
+
+  // Simpan slug dari URL
+  const { subjects: subjectSlug, topics: topicSlug } = params;
+
+  // Simulasi mapping slug ke judul (bisa diimprove fetch dari API jika perlu)
+  // Untuk saat ini tetap gunakan capitalize dan replace dash
+  function humanize(str) {
+    if (!str) return "";
+    return str
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (l) => l.toUpperCase());
+  }
+
   return (
     <div className="w-full h-20 border-b-2 bg-white flex justify-center">
       <nav className="w-5xl h-full px-5 flex items-center justify-between">
-        <Link href="/subjects/astronomi">
+        <Link href={`/subjects/${subjectSlug}`}>
           <X />
         </Link>
         <div className="flex flex-col items-center">
-          <p className="text-sm">Astronomi</p>
-          <h4 className="text-xl font-extrabold">Tata Surya</h4>
+          <p className="text-sm">{humanize(subjectSlug)}</p>
+          <h4 className="text-xl font-extrabold">{humanize(topicSlug)}</h4>
         </div>
         <div
           className="relative"
