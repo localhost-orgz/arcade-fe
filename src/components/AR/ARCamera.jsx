@@ -4,7 +4,7 @@ const ARCamera = ({ model, scale, marker }) => {
   return (
     <div className="relative">
       <iframe
-        src={`https://badzlan.is-a.dev/test-ar?model=${model}&scale=${scale}&marker=${marker}`}
+        src={`https://badzlan.github.io/ar-system?model=${model}&scale=${scale}&marker=${marker}`}
         width="100%"
         height="600px"
         title="AR"
